@@ -1,47 +1,49 @@
 import React, { Component } from 'react';
-import './form.scss';
 
 
 class Form extends Component {
   state = {
-    name: 'sam'
+    email: 'mail@g.com',
+    password: '',
+  }
+
+  handleChange = (e) => {
+    const value = e.target.value;
+    const field = e.target.name;
+    this.setState({
+      [field]: value
+    });
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(this.name.value);
+    const email = this.email.value;
+    const password = this.password.value;
+  
+    console.log({email, password});
   }
 
-  handleInputChange = (e) => {
-    console.log(this.name.value);
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  }
 
   render() {
     return (
-      <div>
-        {/* <button className="action-button" onClick={() => switchView('form')}>Create Product</button> */}
-
-        <form onSubmit={this.handleSubmit}>
-          <input 
-            ref={(ref) => this.name = ref}
-            name='name'
-            value={this.state.name}
-            onChange={this.handleInputChange} 
-          />
-          <input
-            ref={(ref) => this.name = ref}
-            name='lastname'
-            value={this.state.name}
-            onChange={this.handleInputChange} 
-          />
-          <button type='button'>Submit</button>
-        </form>
-
-      </div>
-    )
+      <form onSubmit={this.handleSubmit}>
+        <input
+          type="text" 
+          name='email' 
+          placeholder='email'
+          ref={(ref) => this.email = ref}
+          onChange={() => this.handleChange()}
+        />
+        <input 
+          type="text"
+          name='password' 
+          placeholder='password'
+          ref={(ref) => this.password = ref}
+        />
+    
+        <button type='submit'>Signup</button>
+      </form>
+    );
   }
 }
 
