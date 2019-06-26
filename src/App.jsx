@@ -1,73 +1,64 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import './App.scss';
 import ProductList from './components/ProductList';
 import CartProductList from './components/CartProductList';
 
-class Root extends Component {
-  state = {
-    products: [
-      {
-        id: 1,
-        name: 'Product 1',
-        price: 100,
-        quantity: 100,
-      },
-      {
-        id: 2,
-        name: 'Product 1',
-        price: 100,
-        quantity: 100,
-      },
-      {
-        id: 3,
-        name: 'Product 1',
-        price: 100,
-        quantity: 100,
-      },
-      {
-        id: 4,
-        name: 'Product 1',
-        price: 100,
-        quantity: 100,
-      },
-    ],
-    cart: {
-      products: []
+
+const Root = () => {
+  let products = [
+    {
+      id: 1,
+      name: 'Product 1',
+      price: 100,
+      quantity: 100,
+    },
+    {
+      id: 2,
+      name: 'Product 1',
+      price: 100,
+      quantity: 100,
+    },
+    {
+      id: 3,
+      name: 'Product 1',
+      price: 100,
+      quantity: 100,
+    },
+    {
+      id: 4,
+      name: 'Product 1',
+      price: 100,
+      quantity: 100,
+    },
+  ];
+
+  const [cartProducts, setCartProducts] = useState([]);
+
+  const addToCart = (productId) => {
+    const product = products.find(item => item.id === productId);
+    const productInCart = cartProducts.find(item => item.id === productId);
+    if(!productInCart) {
+      const updatedCartProducts = [...cartProducts, product];
+      setCartProducts(updatedCartProducts);
     }
   }
 
-  addToCart = (productId) => {
-    const product = this.state.products.find(item => item.id === productId);
-    this.setState({
-      cart: {
-        products: [...this.state.cart.products, product]
-      }
-    });
+  const removeProduct = (productId) => {
+    const products = cartProducts.filter(item => item.id !== productId);
+    setCartProducts(products);
   }
 
-  removeProduct = (productId) => {
-    const products = this.state.cart.products.filter(item => item.id !== productId);
-
-    this.setState({
-      cart: {
-        products
-      }
-    });
-  }
-
-  render() {
-    return (
+  return (
+    <div>
       <div>
-        <div>
-          <h1>
-            OUR AWESOME PRODUCT
-          </h1>
-          <ProductList products={this.state.products} addToCart={this.addToCart} />
-          <CartProductList products={this.state.cart.products} removeProduct={this.removeProduct}/>
-        </div>
+        <h1>
+          OUR AWESOME PRODUCT
+        </h1>
+        <ProductList products={products} addToCart={addToCart} />
+        <CartProductList products={cartProducts} removeProduct={removeProduct}/>
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 export default Root;
