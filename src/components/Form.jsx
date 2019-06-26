@@ -1,50 +1,75 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react'
 
-
-class Form extends Component {
-  state = {
-    email: 'mail@g.com',
+const Form = () => {
+  const [formInput, setFormInput] = useState({
+    firstname: 'John',
+    lastname: 'Keneth',
     password: '',
+    categories: 2
+  });
+
+  const saveInput = (field, value) => {
+    const newFormInput = {...formInput};
+    newFormInput[field] = value;
+    setFormInput(newFormInput);
   }
 
-  handleChange = (e) => {
-    const value = e.target.value;
-    const field = e.target.name;
-    this.setState({
-      [field]: value
-    });
-  }
-
-  handleSubmit = (e) => {
+  const submitForm = (e) => {
     e.preventDefault();
-    const email = this.email.value;
-    const password = this.password.value;
-  
-    console.log({email, password});
+    console.log('formInput', formInput);
   }
 
+  const categories = [
+    {
+      id: 1,
+      name: 'tech'
+    },
+    {
+      id: 2,
+      name: 'fashion'
+    },
+    {
+      id: 3,
+      name: 'gists'
+    },
+  ];
 
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <input
-          type="text" 
-          name='email' 
-          placeholder='email'
-          ref={(ref) => this.email = ref}
-          onChange={() => this.handleChange()}
-        />
-        <input 
-          type="text"
-          name='password' 
-          placeholder='password'
-          ref={(ref) => this.password = ref}
-        />
-    
-        <button type='submit'>Signup</button>
-      </form>
-    );
-  }
+  const optionsList = [<option key="0">Select Options</option>];
+
+  categories.forEach(item => {
+    optionsList.push(<option key={item.id} value={item.id}>{item.name}</option>);
+  });
+
+  return (
+    <form onSubmit={submitForm}>
+      <input 
+        type="text" 
+        name="firstname" 
+        value={formInput.firstname} 
+        onChange={(e) =>  saveInput(e.target.name, e.target.value)}
+      />
+      <input 
+        type="text" 
+        name="lastname" 
+        value={formInput.lastname} 
+        onChange={(e) =>  saveInput(e.target.name, e.target.value)}
+      />
+      <input 
+        type="password" 
+        name="password" 
+        value={formInput.password}
+        onChange={(e) =>  saveInput(e.target.name, e.target.value)}
+      />
+      <select 
+        name="categories" 
+        id="" value={formInput.categories}
+        onChange={(e) =>  saveInput(e.target.name, e.target.value)}>
+        {optionsList}
+      </select>
+      <button type='submit'>Save Form</button>
+      
+    </form>
+  );
 }
 
 export default Form;

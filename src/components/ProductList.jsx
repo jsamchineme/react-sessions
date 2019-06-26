@@ -1,19 +1,17 @@
 import React from 'react';
 import ProductItem from './ProductItem';
 
-const ProductList = ({
-  products,
-  addToCart
-}) => {
-  const productList = products.map((item, index) => {
-    return (
-      <ProductItem key={index} {...item} addToCart={addToCart} />
-    )
+const ProductList = ({ data, addToCart }) => {
+
+  const allProducts = data.map((item, index) => {
+    return <ProductItem data={item} addToCart={addToCart} />
   });
+  
   return (
     <section id="product-list">
-      {productList}
+      {allProducts}
     </section>
-  );
+  )
 }
+
 export default ProductList;

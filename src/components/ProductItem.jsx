@@ -1,28 +1,31 @@
 import React from 'react';
 
 const ProductItem = ({
-  id,
-  name,
-  price,
-  quantity,
+  data: {
+    id,
+    name,
+    price,
+    quantity,
+  },
   addToCart,
-  removeProduct,
+  removeFromCart
 }) => {
-  let Button;
-  if(addToCart) {
-    Button = <button className="action-button" onClick={() => addToCart(id)}>Add To Cart</button>    
+  let buttonAction;
+  let buttonText;
+  if(addToCart !== undefined) {
+    buttonAction = addToCart;
+    buttonText = 'Add To Cart';
   } else {
-    Button = <button className="action-button" onClick={() => removeProduct(id)}>Remove</button>
+    buttonAction = removeFromCart;
+    buttonText = 'Remove from Cart';
   }
   return (
-    <div className="product-item">
+    <div class="product-item">
       <header>{name}</header>
-      <div className="product-item-body">
-        <div className="product-price">Price: {price}</div>
-        <div className="product-quantity">Stock available: {quantity}</div>
-        <div>
-          {Button}
-        </div>
+      <div class="product-item-body">
+        <div class="product-price">Price: {price}</div>
+        <div class="product-quantity">Stock available: {quantity}</div>
+        <div><button class="action-button" onClick={() => buttonAction(id)}>{buttonText}</button></div>
       </div>
     </div>
   );

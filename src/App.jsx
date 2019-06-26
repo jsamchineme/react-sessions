@@ -5,28 +5,28 @@ import CartProductList from './components/CartProductList';
 
 
 const Root = () => {
-  let products = [
+  const products = [
     {
       id: 1,
       name: 'Product 1',
-      price: 100,
-      quantity: 100,
+      price: 10,
+      quantity: 10,
     },
     {
       id: 2,
-      name: 'Product 1',
-      price: 100,
-      quantity: 100,
+      name: 'Product 2',
+      price: 450,
+      quantity: 10,
     },
     {
       id: 3,
-      name: 'Product 1',
-      price: 100,
-      quantity: 100,
+      name: 'Product 3',
+      price: 560,
+      quantity: 150,
     },
     {
       id: 4,
-      name: 'Product 1',
+      name: 'Product 4',
       price: 100,
       quantity: 100,
     },
@@ -36,27 +36,22 @@ const Root = () => {
 
   const addToCart = (productId) => {
     const product = products.find(item => item.id === productId);
-    const productInCart = cartProducts.find(item => item.id === productId);
-    if(!productInCart) {
-      const updatedCartProducts = [...cartProducts, product];
-      setCartProducts(updatedCartProducts);
-    }
+    const updatedCartProducts = [...cartProducts, product];
+    setCartProducts(updatedCartProducts);
   }
 
-  const removeProduct = (productId) => {
-    const products = cartProducts.filter(item => item.id !== productId);
-    setCartProducts(products);
+  const removeFromCart = (productId) => {
+    const updatedCartProducts = cartProducts.filter(item => item.id !== productId);
+    setCartProducts(updatedCartProducts);
   }
 
   return (
     <div>
-      <div>
-        <h1>
-          OUR AWESOME PRODUCT
-        </h1>
-        <ProductList products={products} addToCart={addToCart} />
-        <CartProductList products={cartProducts} removeProduct={removeProduct}/>
-      </div>
+      <h1>Our Awesome Product</h1>
+
+      <ProductList data={products} addToCart={addToCart} />
+
+      <CartProductList data={cartProducts} removeFromCart={removeFromCart} />
     </div>
   )
 }
